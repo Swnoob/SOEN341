@@ -1,43 +1,41 @@
 import { auth } from "./firebase";
 import { db } from "./firebase";
 
-// Sign Up
-// export const doCreateUserWithEmailAndPassword = (email, passwordone, n, u) =>
-//   auth.createUserWithEmailAndPassword(email, passwordone).then(resp => {
-//     return db
-//       .collection("users")
-//       .doc(u)
-//       .set({
-//         name: n,
-//         username: u,
-//         email: email,
-//         creationDate:new Date().toISOString(),
-//         userID:resp.user.uid,
-//       });
-//   });
-
-
+//Sign Up
 export const doCreateUserWithEmailAndPassword = (email, passwordone, n, u) =>
-  db.doc(`/users/${u}`).get()
-  .then(doc => {
-      if(doc.exists){
-          return alert("user name already taken");
-      } else {
-          return auth().createUserWithEmailAndPassword(email, passwordone, n, u).then(resp => {
-                return db
-                  .collection("users")
-                  .doc(u)
-                  .set({
-                    name: n,
-                    username: u,
-                    email: email,
-                    creationDate:new Date().toISOString(),
-                    userID:resp.user.uid,
-                  });
-              })
-      }
+  auth.createUserWithEmailAndPassword(email, passwordone).then(resp => {
+    return db
+      .collection("users")
+      .doc(u)
+      .set({
+        name: n,
+        username: u,
+        email: email,
+        creationDate: new Date().toISOString(),
+        userID: resp.user.uid
+      });
   });
 
+// export const doCreateUserWithEmailAndPassword = (email, passwordone, n, u) =>
+//   db.doc(`/users/${u}`).get()
+//   .then(doc => {
+//       if(doc.exists){
+//           return alert("user name already taken");
+//       } else {
+//           return auth().createUserWithEmailAndPassword(email, passwordone, n, u).then(resp => {
+//                 return db
+//                   .collection("users")
+//                   .doc(u)
+//                   .set({
+//                     name: n,
+//                     username: u,
+//                     email: email,
+//                     creationDate:new Date().toISOString(),
+//                     userID:resp.user.uid,
+//                   });
+//               })
+//       }
+//   });
 
 // Sign In
 export const doSignInWithEmailAndPassword = (email, password) =>
