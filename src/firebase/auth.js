@@ -16,6 +16,23 @@ export const doCreateUserWithEmailAndPassword = (email, passwordone, n, u) =>
       });
   });
 
+export const checkUserNameAvalaibility = (un, ava, et) =>
+  db
+    .doc(`/users/${un}`)
+    .get()
+    .then(doc => {
+      if (doc.exists) {
+        this.setState({
+          ava: false,
+          et: "User name exists"
+        });
+      } else {
+        this.setState({
+          ava: true
+        });
+      }
+    });
+
 // export const doCreateUserWithEmailAndPassword = (email, passwordone, n, u) =>
 //   db.doc(`/users/${u}`).get()
 //   .then(doc => {

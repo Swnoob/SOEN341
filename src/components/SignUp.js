@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { auth } from "../firebase";
+import { db } from "../firebase";
 import "./auth.css";
 import * as routes from "../constants/routes";
 import { SignInLink } from "./SignIn";
@@ -21,6 +22,8 @@ const INITIAL_STATE = {
   email: "",
   passwordOne: "",
   passwordTwo: "",
+  avalaibility: "",
+  errortext: "",
   error: null
 };
 
@@ -43,15 +46,14 @@ class SignUpForm extends Component {
   onSubmit = event => {
     event.preventDefault();
 
-    const { email, passwordOne, name, username } = this.state;
+    const { email, passwordOne, name, username, errortext } = this.state;
+
+    var avalaibility = false;
+
+    db.checkUserNameAvalaibility(username, avalaibility, errortext);
 
     auth
-      .doCreateUserWithEmailAndPassword(
-        email,
-        passwordOne,
-        name,
-        username
-      )
+      .doCreateUserWithEmailAndPassword(email, passwordOne, name, username)
       .then(authUser => {
         this.setState(() => ({ ...INITIAL_STATE }));
         this.props.history.push(routes.HOME);
@@ -66,8 +68,10 @@ class SignUpForm extends Component {
       username,
       name,
       email,
+      avalaibility,
       passwordOne,
       passwordTwo,
+      errortext,
       error
     } = this.state;
 
@@ -76,7 +80,8 @@ class SignUpForm extends Component {
       passwordOne === "" ||
       email === "" ||
       name === "" ||
-      username === "";
+      username === "" ||
+      avalaibility === false;
 
     return (
       <form onSubmit={this.onSubmit}>
@@ -85,6 +90,7 @@ class SignUpForm extends Component {
           id="standard-secondary"
           label="User name"
           color="primary"
+          //helperText={this.state.errorText}
           value={username}
           onChange={event =>
             this.setState(byPropKey("username", event.target.value))
