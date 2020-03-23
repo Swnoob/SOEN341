@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 
 import { auth } from "../firebase";
-import { db } from "../firebase/firebase";
+import { db } from "../firebase";
 const byPropKey = (propertyName, value) => () => ({
   [propertyName]: value
 });
@@ -21,7 +21,7 @@ class FullnameUpdateform extends Component {
   onSubmit = event => {
     const { fullname } = this.state;
 
-    var user = auth().currentUser;
+    var user = auth.currentUser;
     db.collection("users")
       .doc(user.uid)
       .update({

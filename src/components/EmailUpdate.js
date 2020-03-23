@@ -22,9 +22,7 @@ class EmailUpdateForm extends Component {
   onSubmit = event => {
     const { email } = this.state;
 
-    var user = auth().currentUser;
-
-    user
+    auth.currentUser
       .updateEmail(email)
       .then(() => {
         this.setState(() => ({ ...INITIAL_STATE }));
