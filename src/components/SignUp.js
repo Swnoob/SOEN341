@@ -75,10 +75,10 @@ class SignUpForm extends Component {
       username,
       name,
       email,
-      avalaibility,
+      //avalaibility,
       passwordOne,
       passwordTwo,
-      errortext,
+      //errortext,
       error
     } = this.state;
 
@@ -87,8 +87,8 @@ class SignUpForm extends Component {
       passwordOne === "" ||
       email === "" ||
       name === "" ||
-      username === "" ||
-      avalaibility === false;
+      username === ""; //||
+    // avalaibility === false;
 
     return (
       <form onSubmit={this.onSubmit}>
@@ -98,8 +98,12 @@ class SignUpForm extends Component {
           label="User name"
           color="primary"
           //helperText={this.state.errorText}
+
           value={username}
-          onChange={this.setUsername}
+          //onChange={this.setUsername}
+          onChange={event =>
+            this.setState(byPropKey("username", event.target.value))
+          }
           type="text"
         />
         <TextField

@@ -76,7 +76,7 @@ export const doEmailUpdate = email =>
   auth.currentUser.updateEmail(email).then(
     db
       .collection("users")
-      .doc(auth.username) //retrieve user name from fb
+      .doc("user3") //retrieve user name from fb
       .update({
         email: email
       })
@@ -86,7 +86,7 @@ export const doEmailUpdate = email =>
 export const doNickNameUpdate = nickname =>
   db
     .collection("users")
-    .doc(auth.currentUser.username)
+    .doc("user3")
     .update({
       name: nickname
     });
