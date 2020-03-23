@@ -16,17 +16,17 @@ export const doCreateUserWithEmailAndPassword = (email, passwordone, n, u) =>
       });
   });
 
-export const checkUserNameAvalaibility = un =>
-  db
-    .doc(`/users/${un}`)
-    .get()
-    .then(doc => {
-      if (doc.exists) {
-        return false;
-      } else {
-        return true;
-      }
-    });
+// export const checkUserNameAvalaibility = un =>
+//   db
+//     .doc(`/users/${un}`)
+//     .get()
+//     .then(doc => {
+//       if (doc.exists) {
+//         return false;
+//       } else {
+//         return true;
+//       }
+//     });
 
 // export const doCreateUserWithEmailAndPassword = (email, passwordone, n, u) =>
 //   db.doc(`/users/${u}`).get()
@@ -70,3 +70,23 @@ export const doPasswordReset = email =>
 // Password Change
 export const doPasswordUpdate = password =>
   auth.currentUser.updatePassword(password);
+
+//Email Update
+export const doEmailUpdate = email =>
+  auth.currentUser.updateEmail(email).then(
+    db
+      .collection("users")
+      .doc(auth.currentUser.uid)
+      .set({
+        email: email
+      })
+  );
+
+//Update nick name
+export const doNickNameUpdate = nickname =>
+  db
+    .collection("users")
+    .doc(auth.currentUser.uid)
+    .update({
+      name: nickname
+    });

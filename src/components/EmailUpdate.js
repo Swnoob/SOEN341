@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 
-import { auth } from "../firebase";
-import { db } from "../firebase/firebase";
+import { doEmailUpdate } from "../firebase/auth";
 
 const byPropKey = (propertyName, value) => () => ({
   [propertyName]: value
@@ -22,8 +21,7 @@ class EmailUpdateForm extends Component {
   onSubmit = event => {
     const { email } = this.state;
 
-    auth.currentUser
-      .updateEmail(email)
+    doEmailUpdate(email)
       .then(() => {
         this.setState(() => ({ ...INITIAL_STATE }));
       })
