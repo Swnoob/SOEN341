@@ -34,6 +34,13 @@ const byPropKey = (propertyName, value) => () => ({
 class SignUpForm extends Component {
   state = { ...INITIAL_STATE };
 
+  // setUsername = username => {
+  //   if (auth.checkUserNameAvalaibility(username.target.value)) {
+  //     console.log("username taken");
+  //   } else {
+  //     this.setState({ username: username.target.value, avaliability: true });
+  //   }
+  // };
   //   checkPassword() {
   //     if(!this.state.passwordOne || this.state.passwordOne !== this.state.passwordTwo){
   //        this.setState({error:"passwords do not match"});
@@ -48,9 +55,9 @@ class SignUpForm extends Component {
 
     const { email, passwordOne, name, username, errortext } = this.state;
 
-    var avalaibility = false;
+    //var avalaibility = false;
 
-    db.checkUserNameAvalaibility(username, avalaibility, errortext);
+    //db.checkUserNameAvalaibility(username);
 
     auth
       .doCreateUserWithEmailAndPassword(email, passwordOne, name, username)
@@ -92,9 +99,7 @@ class SignUpForm extends Component {
           color="primary"
           //helperText={this.state.errorText}
           value={username}
-          onChange={event =>
-            this.setState(byPropKey("username", event.target.value))
-          }
+          onChange={this.setUsername}
           type="text"
         />
         <TextField
