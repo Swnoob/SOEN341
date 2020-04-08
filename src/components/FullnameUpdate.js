@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-
+import TextField from "@material-ui/core/TextField";
+import Button from "@material-ui/core/Button";
 import { doNickNameUpdate } from "../firebase/auth";
 const byPropKey = (propertyName, value) => () => ({
   [propertyName]: value
@@ -38,16 +39,25 @@ class FullnameUpdateform extends Component {
 
     return (
       <form onSubmit={this.onSubmit}>
-        <input
+        <TextField
+          name="Fullname"
           value={fullname}
+          id="standard-secondary"
+          label="New Nick Name"
+          color="primary"
           onChange={event =>
             this.setState(byPropKey("fullname", event.target.value))
           }
-          placeholder="New Nick Name"
         />
-        <button disabled={isInvalid} type="submit">
-          Update
-        </button>
+        <br />
+        <Button
+          type="submit"
+          disabled={isInvalid}
+          variant="contained"
+          color="primary"
+        >
+          Update Nick Name
+        </Button>
 
         {error && <p>{error.message}</p>}
       </form>

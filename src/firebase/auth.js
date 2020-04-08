@@ -90,3 +90,11 @@ export const doNickNameUpdate = nickname =>
     .update({
       name: nickname
     });
+
+export const doBioUpdate = newBio =>
+  db
+    .collection("users")
+    .doc(localStorage.getItem("username"))
+    .update({
+      bio: newBio
+    });
